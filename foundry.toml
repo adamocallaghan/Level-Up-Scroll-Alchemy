@@ -6,4 +6,7 @@ remappings  = [
     "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/"
 ]
 
+[rpc_endpoints]
+scroll = "${SROLL_SEPOLIA_RPC}"
+
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
