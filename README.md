@@ -1,66 +1,35 @@
-## Foundry
+## LiquiMarkets: Points & Marks Marketplace
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+** A marketplace that allows counterparties to buy & sell illiquid points and tokens, or to make those positions semi-liquid **
 
-Foundry consists of:
+## Built with...
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- Alchemy
+- Scroll
+- Foundry
+- OpenZeppelin
 
-## Documentation
+## How it works...
 
-https://book.getfoundry.sh/
+# Sellers:
 
-## Usage
+- create an 'Offer' for the amount of points, marks, or other illiquid tokens they want to sell - and at what price (in ETH).
+- provide collateral to the value of those points (used as default insurance).
 
-### Build
+# Buyers:
 
-```shell
-$ forge build
-```
+- accept an Offer by providing the full purchase price (in ETH).
+- 'shares' are minted to the user for the exact amount of points/marks they are purchasing (creating a semi-liquid position)
 
-### Test
+# Settlement:
 
-```shell
-$ forge test
-```
+Sellers...
 
-### Format
+- within 24 hours of the TGE (token generation event) for the tokens being sold, the Seller must deposit the correct number of tokens into the LiquiMarkets contract
+- when this is complete the Seller can then claim their payment (the Buyers' deposited ETH) alongside their own collateral
+- failure to deposit the correct number of tokens within 24 hours of TGE results in the Sellers collateral being at risk of forfeiture
 
-```shell
-$ forge fmt
-```
+Buyers...
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- once a Seller has deposited the full amount of tokens the Buyer has purchased, the tokens become available to Claim by the Buyer.
+- in order to Claim these tokens, the Buyer must deposit the same amount of 'shares' into the LiquiMarkets contract, which are then burned.
