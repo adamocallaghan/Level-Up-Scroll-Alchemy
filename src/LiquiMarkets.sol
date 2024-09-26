@@ -26,7 +26,7 @@ contract LiquiMarkets is ERC20, Ownable {
         CANCELLED
     }
 
-    Offer[] offers; // array of offers
+    Offer[] public offers; // array of offers
 
     address public liquidToken; // liquid token for user durign settlement
 
