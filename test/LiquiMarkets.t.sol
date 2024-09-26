@@ -47,5 +47,28 @@ contract LiquiMarketsTest is Test {
         assertEq(offerPoints, 1234);
     }
 
-    function test_acceptOffer() public {}
+    function test_acceptOffer() public {
+        createOffer_bob(1 ether, 5454);
+        acceptOffer_alice(0);
+
+        (,,,, uint256 sellerCollateral,) = market.offers(0);
+
+        assertEq(sellerCollateral, 1 ether);
+    }
+
+    // ===============
+    // === HELPERS ===
+    // ===============
+
+    function createOffer_bob(uint256 _etherValue, uint256 _tokensForSale) public {
+        vm.startPrank(bob);
+        market.createOffer{value: _etherValue}(_tokensForSale);
+        vm.stopPrank();
+    }
+
+    function acceptOffer_alice(uint256 _offerIndex) public {
+        vm.startPrank(alice);
+        market.acceptOffer{value: 1 ether}(_offerIndex);
+        vm.stopPrank();
+    }
 }
