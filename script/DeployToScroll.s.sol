@@ -26,7 +26,7 @@ contract DeployToScroll is Script {
 
         // deploy LiquiMarkets contract
         LiquiMarkets market =
-            new LiquiMarkets{salt: "seagull"}("Liquid Scroll Marks", "liqMarks", DEPLOYER_PUBLIC_ADDRESS);
+            new LiquiMarkets{salt: "robin"}("Liquid Scroll Marks", "liqMarks", DEPLOYER_PUBLIC_ADDRESS);
 
         console2.log("LiquiMarkets Address: ", address(market));
 
