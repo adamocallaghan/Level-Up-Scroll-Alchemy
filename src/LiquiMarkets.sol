@@ -86,6 +86,7 @@ contract LiquiMarkets is ERC20, Ownable {
         }
 
         offer.status = Offer_Status.ACCEPTED; // set status to ACCEPTED
+        offer.buyer = msg.sender; // set sender as buyer
         offer.buyerCollateral = msg.value; // set buyerCollateral
 
         mintSharesToBuyer(offer.points); // mint shares to buyer at a 1:1 shares:points ratio
