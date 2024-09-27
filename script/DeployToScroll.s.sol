@@ -2,6 +2,7 @@ pragma solidity ^0.8.20;
 
 import {Script, console2} from "forge-std/Script.sol";
 import {LiquiMarkets} from "../src/LiquiMarkets.sol";
+import {ScrollToken} from "../src/ScrollToken.sol";
 
 contract DeployToScroll is Script {
     function run() external {
@@ -26,9 +27,17 @@ contract DeployToScroll is Script {
 
         // deploy LiquiMarkets contract
         LiquiMarkets market =
-            new LiquiMarkets{salt: "robin"}("Liquid Scroll Marks", "liqMarks", DEPLOYER_PUBLIC_ADDRESS);
+            new LiquiMarkets{salt: "bluebird"}("Liquid Scroll Marks", "liqMarks", DEPLOYER_PUBLIC_ADDRESS);
 
         console2.log("LiquiMarkets Address: ", address(market));
+
+        // deploy Scroll token for settlement demonstration
+        ScrollToken scroll = new ScrollToken{salt: "bluebird"}(DEPLOYER_PUBLIC_ADDRESS);
+
+        console2.log("Scroll Token Address: ", address(scroll));
+
+        // mint Scroll tokens to our Deployer Address for demonstation of settlement
+        scroll.mintAllocation(DEPLOYER_PUBLIC_ADDRESS);
 
         vm.stopBroadcast();
     }

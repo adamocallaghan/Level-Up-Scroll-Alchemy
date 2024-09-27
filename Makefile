@@ -14,8 +14,16 @@ deploy-to-scroll:
 open-settlement-window:
 	cast send $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "setSettlementOpenTimestamp(uint256)" 1727452345 --account deployer
 
-call-balance-of:
-	cast call 0xd30beb5B82bd837f78f777743745B068abec8701 --rpc-url https://scroll-sepolia.g.alchemy.com/v2/LHwHYShuz3y8Y0JH0k2tx1IZy7GubR8O "balanceOf(address)" 0x64a822f980dc5f126215d75d11dd8114ed0bdb5f --account deployer
+# ============================
+# === SET SETTLEMENT TOKEN ===
+# ============================
 
-call-balance-of-with-vars:
-	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "balanceOf(address)" $(DEPLOYER_PUBLIC_ADDRESS) --account deployer
+set-settlement-token:
+	cast send $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "setLiquidTokenContractAddress(address)" $(SCROLL_TOKEN) --account deployer
+
+# ==========================================
+# === GET BALANCE OF LIQUID SCROLL MARKS ===
+# ==========================================
+
+call-balance-of:
+	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "balanceOf(address)(uint)" $(DEPLOYER_PUBLIC_ADDRESS) --account deployer
