@@ -61,7 +61,7 @@ contract LiquiMarkets is ERC20, Ownable {
         // create Offer with points & msg.value
         offers.push(
             Offer({
-                points: _points,
+                points: _points * 1e18,
                 seller: msg.sender,
                 sellerCollateral: msg.value,
                 buyer: address(0),
@@ -186,7 +186,7 @@ contract LiquiMarkets is ERC20, Ownable {
     // =======================
 
     function setLiquidTokenContractAddress(address _liquidToken) public onlyOwner {
-        liquidToken == _liquidToken;
+        liquidToken = _liquidToken;
     }
 
     function setSettlementOpenTimestamp(uint256 _timestamp) public onlyOwner {
