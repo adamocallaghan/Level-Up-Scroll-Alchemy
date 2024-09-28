@@ -5,7 +5,7 @@
 # =========================
 
 deploy-to-scroll:
-	forge script script/DeployToScroll.s.sol:DeployToScroll --broadcast --verify --etherscan-api-key $(SCROLL_ETHERSCAN_API_KEY) --rpc-url $(SROLL_SEPOLIA_RPC) --account deployer -vvvvv
+	forge script script/DeployToScroll.s.sol:DeployToScroll --broadcast --verify --etherscan-api-key $(SCROLL_ETHERSCAN_API_KEY) --rpc-url $(SCROLL_SEPOLIA_RPC) --account deployer -vvvvv
 
 # ==============================
 # === OPEN SETTLEMENT WINDOW ===
@@ -27,3 +27,6 @@ set-settlement-token:
 
 call-balance-of:
 	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "balanceOf(address)(uint)" $(DEPLOYER_PUBLIC_ADDRESS) --account deployer
+
+get-liquid-token-address:
+	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "liquidToken()(address)" --account deployer

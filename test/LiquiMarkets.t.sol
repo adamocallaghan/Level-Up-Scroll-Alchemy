@@ -4,6 +4,7 @@ pragma solidity 0.8.20;
 
 import "forge-std/Test.sol";
 import {LiquiMarkets} from "../src/LiquiMarkets.sol";
+import {ScrollToken} from "../src/ScrollToken.sol";
 
 struct Offer {
     uint256 points;
@@ -24,7 +25,9 @@ enum Offer_Status {
 
 contract LiquiMarketsTest is Test {
     LiquiMarkets public market;
+    ScrollToken public token;
 
+    address owner = makeAddr("owner");
     address bob = makeAddr("bob");
     address alice = makeAddr("alice");
 
@@ -34,7 +37,17 @@ contract LiquiMarketsTest is Test {
         vm.deal(alice, 1000e18);
 
         // instantiate contracts
-        market = new LiquiMarkets("Liquid Scroll Marks", "liqMarks", msg.sender);
+        market = new LiquiMarkets("Liquid Scroll Marks", "liqMarks", owner);
+        token = new ScrollToken(owner);
+
+        vm.startPrank(owner);
+        market.setSettlementOpenTimestamp(block.timestamp);
+        market.setLiquidTokenContractAddress(address(token));
+        vm.stopPrank();
+
+        token.mintAllocation(bob);
+        token.mintAllocation(alice);
+        token.mintAllocation(owner);
     }
 
     function test_createOffer() public {
@@ -54,6 +67,18 @@ contract LiquiMarketsTest is Test {
         (,,,, uint256 sellerCollateral,) = market.offers(0);
 
         assertEq(sellerCollateral, 1 ether);
+    }
+
+    function test_settle() public {
+        createOffer_bob(1 ether, 5454);
+        acceptOffer_alice(0);
+
+        (uint256 offerPoints,,,,,) = market.offers(0);
+
+        vm.startPrank(bob);
+        token.approve(address(market), offerPoints); // approve liquimarkets to spend the correct amount of Scroll tokens
+        market.settle(0);
+        vm.stopPrank();
     }
 
     // ===============
