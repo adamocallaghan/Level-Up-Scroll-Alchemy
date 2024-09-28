@@ -22,6 +22,7 @@ contract LiquiMarkets is ERC20, Ownable {
         OPEN,
         ACCEPTED,
         SETTLED,
+        CLAIMED,
         DEFAULT,
         CANCELLED
     }
@@ -133,15 +134,15 @@ contract LiquiMarkets is ERC20, Ownable {
         // get the Offer
         Offer storage offer = offers[_offerIndex];
 
-        // check that msg.sender is the Seller
-        if (offer.seller != msg.sender) {
-            revert Error__YouAreNotTheSellerOfThisOffer();
-        }
+        // // check that msg.sender is the Seller
+        // if (offer.seller != msg.sender) {
+        //     revert Error__YouAreNotTheSellerOfThisOffer();
+        // }
 
-        // settlement must be open
-        if (settlementOpenTimestamp < block.timestamp) {
-            revert Error__SettlementNotYetOpen();
-        }
+        // // settlement must be open
+        // if (settlementOpenTimestamp < block.timestamp) {
+        //     revert Error__SettlementNotYetOpen();
+        // }
 
         // Seller must transfer the exact amont of tokens to this contract
         ERC20(liquidToken).transferFrom(msg.sender, address(this), offer.points);
@@ -149,8 +150,9 @@ contract LiquiMarkets is ERC20, Ownable {
         offer.status = Offer_Status.SETTLED; // set status to SETTLED
 
         // checks done, liquidTokens transfered to this contract = release collateral & payment
-        (bool sent,) = offer.seller.call{value: offer.sellerCollateral + offer.buyerCollateral}("");
-        require(sent, "Failed to send Ether");
+        // (bool sent,) = offer.seller.call{value: offer.sellerCollateral + offer.buyerCollateral}("");
+        offer.seller.call{value: offer.sellerCollateral + offer.buyerCollateral}("");
+        // require(sent, "Failed to send Ether");
 
         emit OfferSettled();
     }
@@ -159,24 +161,26 @@ contract LiquiMarkets is ERC20, Ownable {
         // get the Offer
         Offer storage offer = offers[_offerIndex];
 
-        // check that msg.sender is the Buyer
-        if (offer.buyer != msg.sender) {
-            revert Error__YouAreNotTheBuyerOfThisOffer();
-        }
+        // // check that msg.sender is the Buyer
+        // if (offer.buyer != msg.sender) {
+        //     revert Error__YouAreNotTheBuyerOfThisOffer();
+        // }
 
-        // settlement must be open
-        if (settlementOpenTimestamp < block.timestamp) {
-            revert Error__SettlementNotYetOpen();
-        }
+        // // settlement must be open
+        // if (settlementOpenTimestamp < block.timestamp) {
+        //     revert Error__SettlementNotYetOpen();
+        // }
 
         // Seller must transfer the exact amont of shares to this contract
-        ERC20(address(this)).transferFrom(msg.sender, address(this), offer.points);
+        // ERC20(address(this)).transferFrom(msg.sender, address(this), offer.points);
 
         // burn the shares
         burnSharesFromBuyer(offer.points);
 
         // transfer the liquidTokens to the Buyer
         ERC20(liquidToken).transfer(msg.sender, offer.points);
+
+        offer.status = Offer_Status.CLAIMED;
 
         emit TokensClaimed();
     }

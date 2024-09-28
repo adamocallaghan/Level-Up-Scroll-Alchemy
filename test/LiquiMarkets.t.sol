@@ -81,6 +81,25 @@ contract LiquiMarketsTest is Test {
         vm.stopPrank();
     }
 
+    function test_claimTokens() public {
+        createOffer_bob(1 ether, 5454);
+        acceptOffer_alice(0);
+
+        (uint256 offerPoints,,,,,) = market.offers(0);
+
+        vm.startPrank(bob);
+        token.approve(address(market), offerPoints); // approve liquimarkets to spend the correct amount of Scroll tokens
+        market.settle(0);
+        vm.stopPrank();
+
+        console.log("Alice's LSM Balance: ", market.balanceOf(address(alice)));
+
+        vm.startPrank(alice);
+        market.approve(address(market), 5454 * 1e18);
+        market.claimTokens(0);
+        vm.stopPrank();
+    }
+
     // ===============
     // === HELPERS ===
     // ===============

@@ -12,7 +12,7 @@ deploy-to-scroll:
 # ==============================
 
 open-settlement-window:
-	cast send $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "setSettlementOpenTimestamp(uint256)" 1727452345 --account deployer
+	cast send $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "setSettlementOpenTimestamp(uint256)" 1 --account deployer
 
 # ============================
 # === SET SETTLEMENT TOKEN ===
@@ -25,8 +25,8 @@ set-settlement-token:
 # === GET BALANCE OF LIQUID SCROLL MARKS ===
 # ==========================================
 
-call-balance-of:
+get-balance-of-liquid-scroll-marks:
 	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "balanceOf(address)(uint)" $(DEPLOYER_PUBLIC_ADDRESS) --account deployer
 
-get-liquid-token-address:
+get-scroll-token-address:
 	cast call $(LIQUIMARKETS_ADDRESS_SCROLL) --rpc-url $(SCROLL_SEPOLIA_RPC) "liquidToken()(address)" --account deployer

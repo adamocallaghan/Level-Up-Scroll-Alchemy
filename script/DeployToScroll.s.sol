@@ -26,13 +26,12 @@ contract DeployToScroll is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         // deploy LiquiMarkets contract
-        LiquiMarkets market =
-            new LiquiMarkets{salt: "bluebird"}("Liquid Scroll Marks", "liqMarks", DEPLOYER_PUBLIC_ADDRESS);
+        LiquiMarkets market = new LiquiMarkets{salt: "owl"}("Liquid Scroll Marks", "LSM", DEPLOYER_PUBLIC_ADDRESS);
 
         console2.log("LiquiMarkets Address: ", address(market));
 
         // deploy Scroll token for settlement demonstration
-        ScrollToken scroll = new ScrollToken{salt: "bluebird"}(DEPLOYER_PUBLIC_ADDRESS);
+        ScrollToken scroll = new ScrollToken{salt: "owl"}(DEPLOYER_PUBLIC_ADDRESS);
 
         console2.log("Scroll Token Address: ", address(scroll));
 
