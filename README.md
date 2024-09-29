@@ -57,5 +57,8 @@ To deploy the LiquiMarkets contract yourself...
     - deploys the LiquiMarkets contract to Scroll Sepolia
     - deploys the Scroll (mock) token to Scroll Sepolia
     - mints 10,000 $SRCL (mock) tokens for later use in settling accepted offers
+    - **Note:** if re-deploying the contracts make sure to change the create2 'salt' in the _DeployToScroll.s.sol_ script each time
   - paste your deployed LiquiMarkets and Scroll token addresses into the .env variables
   - run `make open-settlement-window` and `make set-settlement-token` to enable settlements on the contract
+
+**Note:** the LiquiMarkets contract is point and token-agnostic, and can be used for any points program, locked positions, or even OTC agreements; to do this just change the constructor arguments for the LiquiMarkets contract in the _DeployToScroll.s.sol_ file, and change the token name/symbol in the ScrollToken.sol file.
