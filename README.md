@@ -36,11 +36,11 @@ Buyers...
 
 ## Live Deployment
 
-LiquiMarkets contract is deployed to Scroll Sepolia testnet here: 0x90C73a89b338894eB2fA41B7cd5D9e9D5e27C98D
-Scroll (mock) token - for settlement demonstration purposes - is deployed here: 0x0b0204de68eAf43b339a27eB508D18624b0349dF
+- LiquiMarkets contract is deployed to Scroll Sepolia testnet here: 0x90C73a89b338894eB2fA41B7cd5D9e9D5e27C98D
+- Scroll (mock) token - for settlement demonstration purposes - is deployed here: 0x0b0204de68eAf43b339a27eB508D18624b0349dF
 
-LiquiMarkets frontend is deployed via Vercel at: https://liquimarkets-ui.vercel.app/
-(Feel free to create an accept offers once you have some Scroll Sepolia testnet ETH in your wallet!)
+- LiquiMarkets frontend is deployed via Vercel at: https://liquimarkets-ui.vercel.app/
+- (Feel free to create an accept offers once you have some Scroll Sepolia testnet ETH in your wallet!)
 
 ## How to Deploy
 
